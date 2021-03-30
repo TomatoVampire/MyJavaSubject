@@ -3,7 +3,11 @@ package EXP1;
 public class Singleton {
     public static void main(String[] args)
     {
-        Emperor.getInstance().print();
+        Emperor a = Emperor.getInstance();//.print();
+        Emperor b = Emperor.getInstance();//.print();
+        a.print();
+        a.changeName("朱棣");
+        b.print();
     }
 
 }
@@ -18,6 +22,10 @@ class Emperor
     {
         Name="朱元璋";
         Dynasty="明朝";
+    }
+    public static void changeName(String n)
+    {
+        INSTANCE.Name = n;
     }
     public static void print()
     {
