@@ -28,6 +28,36 @@ class Phone implements Cloneable,Comparable<Phone>
 {
     String brand;
     Screen screen;
+    Node llist;
+
+    protected static class Node
+    {
+        int data;
+        Node next;
+
+        public Node(int data){this.data=data;next=null;}
+        public Node(){data=0;next=null;}
+
+        public Node deepClone()
+        {
+            Node n=null;
+            while(next != null)
+            {
+                n = next.deepClone();
+                break;
+            }
+            Node New = new Node(data);
+            //New.data = data;
+            New.next = n;
+            return New;
+        }
+
+        @Override
+        public String toString()
+        {
+            return Integer.toString(data);
+        }
+    }
 
     protected static class Screen implements Cloneable {
         float length, width;
@@ -48,6 +78,8 @@ class Phone implements Cloneable,Comparable<Phone>
         screen = new Screen();
         screen.length=length;
         screen.width=width;
+        llist = new Node(1);
+        llist.next = new Node(2);
     }
 
     //拷贝构造器
@@ -69,10 +101,12 @@ class Phone implements Cloneable,Comparable<Phone>
     public Phone clone()
     {
         try {
-            //Phone r = (Phone) super.clone();
-            //r.screen = screen.clone();
-            //return r;
-            return (Phone) super.clone();
+            //deep clone写法（由于llist的存在，无法直接return super.clone()完事）
+            Phone r = (Phone) super.clone();
+            r.screen = screen.clone();
+            llist = llist.deepClone();
+            return r;
+            //return (Phone) super.clone();
         }catch(CloneNotSupportedException e)
         {
             throw new AssertionError();
