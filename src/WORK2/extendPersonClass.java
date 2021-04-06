@@ -1,4 +1,4 @@
-package EXP2;
+package WORK2;
 
 
 public class extendPersonClass {

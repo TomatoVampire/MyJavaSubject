@@ -1,4 +1,4 @@
-package EXP1;
+package WORK1;
 
 public class Singleton {
     public static void main(String[] args)
