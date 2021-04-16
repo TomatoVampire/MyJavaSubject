@@ -5,12 +5,20 @@ import java.util.List;
 
 public class MyArrayTest {
     public static <E> void printArray(E[] a) {
+        System.out.println(array2String(a));
+    }
+
+    public static <E> String array2String(E[] a) {
+        String s ="";
         for (int i = 0; i < a.length; i++) {
             if (a[i] != null) {
-                System.out.print(a[i] + " ");
+                //System.out.print(a[i] + " ");
+                s += (a[i] + " ");
             }
         }
+        return s;
     }
+
 
     public static void main(String[] args)
     {
@@ -25,6 +33,7 @@ public class MyArrayTest {
         s.add(5);
         s.remove(4);
         s.remove(6);
+        s.remove(3);
         Integer[] ta = new Integer[10];
         ta = s.toArray(ta);
         printArray(ta);
@@ -35,49 +44,86 @@ class MyArrayList<T>
 {
     //暂时使用Object[]存
     Object[] list;
-    final int MAXSIZE = 50;
+    int MAXSIZE = 50;
+    protected int size;
 
     public MyArrayList()
     {
         list = new Object[MAXSIZE];
     }
 
+    protected void extendSize()
+    {
+        System.out.println("extending maxsize to " + MAXSIZE*2);
+        MAXSIZE *= 2;
+        Object[] nlist = new Object[MAXSIZE];
+        for(int i=0;i<size;i++)
+        {
+            nlist[i] = list[i];
+        }
+        list = nlist;
+    }
+
     public void add(T e){
-        list.add(e);
+        if(size == MAXSIZE) extendSize();
+        list[size++] = e;
     }
 
     public boolean remove(T e){
-        return  list.remove(e);
+        for(int i=0;i<size;i++)
+        {
+            if(list[i].equals(e))
+            {
+                for(int j=i;j<size-1;j++)
+                    list[j] = list[j+1];
+                list[size--] = null;
+                return true;
+            }
+        }
+        return false;
     }
 
     public T get(int index){
-        if(index >= list.size() || index < 0) return null;
-        return list.get(index);
+        if(index >= size || index < 0) return null;
+        return (T)list[index];
     }
 
     public int size()
     {
-        return list.size();
+        return size;
     }
 
     public boolean contains(T e){
-        return list.contains(e);
+        for(int i=0;i<size;i++)
+        {
+            if(list[i].equals(e))
+                return true;
+        }
+        return false;
     }
 
     public T[] toArray(T[] a) {
-        int s = size();
+        int s = size;
         for(int i=0;i<s;i++)
         {
-            T tmp = get(i);
+            T tmp = (T)list[i];
             a[i] = tmp;
         }
         return a;
     }
 
+
     @Override
     public String toString()
     {
-        return "My arraylist: "+ list.toString();
+        String s ="";
+        for (int i = 0; i < size; i++) {
+            if (list[i] != null) {
+                //System.out.print(a[i] + " ");
+                s += (list[i] + " ");
+            }
+        }
+        return "My arraylist: "+ s;
     }
 
 }
