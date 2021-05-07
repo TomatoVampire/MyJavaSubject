@@ -8,12 +8,12 @@ public class Q1 {
         GamingLaptop gl = new GamingLaptop.Builder().setCPU("AMD Ryzen R7").setGPU("MX250").setNvidiaGPU("Geforce RTX 3060").
                 setHertz(3).setRAM(16).
                 addExternalInterface("USB","HDMI").build();
-        System.out.println(gl);
+        //System.out.println(gl);
         Surface sl = new Surface.Builder().setCPU("Core i7 4700").setHertz(2).
                 setGPU("MX250").setRAM(8).
                 addExternalInterface("USB","HDMI","PD").
                 setSafeMode(true).build();
-        //System.out.println(sl);
+        System.out.println(sl);
         Laptop cl = gl.clone();
         //gl = null;//delete
         cl.addExternalInterface("Type-c");
