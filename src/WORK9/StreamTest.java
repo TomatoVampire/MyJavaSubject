@@ -19,7 +19,7 @@ List<String> expected = asList("Viktor", "Farcic", "John", "Doe",
 * */
 
 import java.util.List;
-import java.util.Locale;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -34,19 +34,23 @@ public class StreamTest {
         System.out.println("操作前："+toCap);
         List<String> s1 = toCap.stream().map(String::toUpperCase).collect(Collectors.toList());
         System.out.println("操作后："+s1);
+        System.out.println("");
 
         //筛选长度小于4的单词
         System.out.println("筛选长度小于4的单词：");
         System.out.println("操作前："+toFilter);
         List<String> s2 = toFilter.stream().filter(x->x.length()<4).collect(Collectors.toList());
         System.out.println("操作后："+s2);
+        System.out.println("");
 
         //flatmap列表展开
         System.out.println("flatmap列表展开：");
         System.out.println("操作前："+toExpand);
         List<String> s3 = toExpand.stream().flatMap(s->{
-            List<String> m= s;
-            return m;
+            // 将每个元素list变成字符数组
+            String[] m = s.toArray(new String[0]);// 注意toArray(new String[0])的用法！
+            Stream<String> st = Arrays.stream(m);
+            return st;
         })
         .collect(Collectors.toList());
         System.out.println("操作后："+s3);
